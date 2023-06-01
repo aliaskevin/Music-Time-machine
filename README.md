@@ -1,2 +1,2 @@
 # Music-Time-machine
-Creating Top 100 music playlist of any day in the past using Billboard and Spotify account.
+Creating playlist for Top 100 music of any day in Spotify after refering data from Billboard using beautiful soup.
