@@ -4,7 +4,7 @@ import os
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 
-# scraping billboard website with input date
+# scraping billboard website for the input date
 date = input("what year you would like to travel to in YYYY-MM-DD format: ")
 billboard_url = "https://www.billboard.com/charts/hot-100/"
 page = requests.get(f"{billboard_url}{date}")
@@ -12,7 +12,7 @@ soup = BeautifulSoup(page.text, "html.parser")
 songs_100 = [song.getText().strip()
              for song in soup.select(selector="li h3")][:100]
 
-# Authenticating spotify using spotipy module
+# OAuth authenticating spotify using spotipy module
 client_id = os.environ.get("client_id")
 client_secret = os.environ.get("client_sec")
 redirect_url = os.environ.get("redirect")
@@ -25,7 +25,7 @@ auth = SpotifyOAuth(client_id=client_id,
                     scope=scope)
 sp = spotipy.Spotify(auth_manager=auth)
 
-# Getting song URIs using search()
+# Getting song URIs using search() for creating playlist
 song_uris = []
 year = date.split('-')[0]
 for song in songs_100:
@@ -45,5 +45,5 @@ new_playlist = sp.user_playlist_create(
     public=False)
 playlist_id = new_playlist['id']
 
-# Adding songs to play list
+# Adding songs to play list using URIs
 sp.playlist_add_items(playlist_id=playlist_id, items=song_uris)
